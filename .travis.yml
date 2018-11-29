@@ -1,0 +1,29 @@
+sudo: false
+language: node_js
+node_js:
+- node
+before_install:
+- npm config set registry http://registry.npmjs.org/
+- npm install -g bower grunt-cli generator-angular generator-karma grunt-karma yo
+- rvm install 2.0.0
+- gem install sass compass
+before_script:
+- npm install
+- bower update
+script:
+- grunt build
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: "./publish.sh"
+  on:
+    branch: master
+    condition: "$TRAVIS_PULL_REQUEST = false"
+env:
+  global:
+  - GIT_NAME: Travis-CI
+  - GIT_EMAIL: travis.ci.build@gmail.com
+  - GH_REF: github.com/thracecraft/thracecraft.github.io
+  - GH_PAGES_BRANCH: master
+  #- GH_PAGES_CNAME: thracecraft.com
+  - secure: Jn6spg5qhYTYLepQKMC+VCm8cP7Im7waQJluR1vDicveLyMu7kj1X3NDVk5+F5lKiWX8kI0rJP610Wsfmb25RQMj4DLIQ1jb99COg1wwclTewxr0UrA5s1SOlXlQYEjg/P37yKmjO8WbQRrCfxJXqWKpJmnR65vaqKeJvmzq35AS1ddI3ile1ZIFhoAiR6t3fUd6ozq37QmCWhGMjA82t/cCWe7D4NuSUeXhvM7d5VugeBU1BcrulINecp7HLog7c7iqZ1IQVvuqvea4XUhr/sDzuvMecBOjNPVp5iNkolYOS5gLqi+owSPNRjiS5ednOJw2Scypirq2JiMgLKzZbVt2ElHJ/lokrhaE+Yj3c0JwC80uF4JPgjXinQHKuW9zNMrt/0PFNaALzdxfhOSLfwro3hiSPmL3ey+UE/dUTGIF/IiuhtyYUV0quJzB5ZRLGh8CKd9yK76qZRBsCDoTM5xWxhqNPj0Ox84EvXd8N9gssuBrew3OudPYTbq2FX4gcvu5Eftj0WpBXP8UEYWSbk/AuxF6ZA56eR2PurxTf1fyye7B/azNl6yePdZyBa8gPpnPMNrKtyke605BoQ5aummgZgEsHWuDn15ahelzj70cGFKHz8I+CNceye6jFg2AtKKIe4sP61c6vfJxNfkdgk/mNgZGEE/enCjHIwnUJrc=
